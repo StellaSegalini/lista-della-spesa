@@ -10,8 +10,14 @@ std::string ShoppingList::getListName() const {
     return listName;
 }
 
-void ShoppingList::addItem(const Item &item) {
-    items.push_back(item);
+void ShoppingList::addItem(const Item& newItem) {
+    for(const auto& item : items) {
+        if(item.getName() == newItem.getName()) {
+            //Item già presente, non aggiungere
+            return;
+        }
+    }
+    items.push_back(newItem);
     notifyObservers();
 }
 
