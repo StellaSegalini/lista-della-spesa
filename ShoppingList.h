@@ -11,6 +11,7 @@
 #include <string>
 #include "Subject.h"
 #include "Item.h"
+#include <optional>
 
 //Classe ShoppingList
 class ShoppingList : public Subject {
@@ -24,7 +25,9 @@ public:
 
     std::string getListName() const;
     void addItem(const Item &item);
-    void updateItemQuantity(const std::string &itemName, int newQuantity);
+    void updateItem(const std::string &itemName,
+                    std::optional<int> newQuantity = std::nullopt,
+                    std::optional<bool> status = std::nullopt);
     void removeItem(const std::string &itemName);
     const std::vector<Item> &getItems() const;
     std::vector<Item> &getItems();

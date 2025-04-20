@@ -3,6 +3,7 @@
 //
 #include "ShoppingList.h"
 #include <algorithm>
+#include <optional>
 
 ShoppingList::ShoppingList(const std::string& listName) : listName(listName) {}
 
@@ -21,10 +22,17 @@ void ShoppingList::addItem(const Item& newItem) {
     notifyObservers();
 }
 
-void ShoppingList::updateItemQuantity(const std::string& itemName, int newQuantity) {
+void ShoppingList::updateItem(const std::string& itemName,
+                              std::optional<int> newQuantity,
+                              std::optional<bool> status) {
     for(auto& item : items){
         if (item.getName() == itemName) {
-            item.setQuantity(newQuantity);
+            if (newQuantity.has_value()) {
+                item.setQuantity(newQuantity.value());
+            }
+            if (status.has_value()) {
+                item.setIsBought(status.value());
+            }
             notifyObservers();
             break;
         }
