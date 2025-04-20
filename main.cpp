@@ -32,6 +32,11 @@ int main(){
     std::cout<<"\nAggiornamento dopo l'aggiunta di oggetti:\n";
     list1.updateItem("Biscotti", std::nullopt, true);
 
+    bool updated = list1.updateItem("Yogurt", 1, true);
+    if(!updated) {
+        std::cout << "'Yogurt' non e' presente nella lista. Nessun aggiornamento effettuato.\n";
+    }
+
     try {
         list1.addItem(Item("Latte","Bevande", -2));
     } catch (const std::invalid_argument& e) {

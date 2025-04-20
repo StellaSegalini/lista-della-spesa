@@ -22,7 +22,7 @@ void ShoppingList::addItem(const Item& newItem) {
     notifyObservers();
 }
 
-void ShoppingList::updateItem(const std::string& itemName,
+bool ShoppingList::updateItem(const std::string& itemName,
                               std::optional<int> newQuantity,
                               std::optional<bool> status) {
     for(auto& item : items){
@@ -34,9 +34,10 @@ void ShoppingList::updateItem(const std::string& itemName,
                 item.setIsBought(status.value());
             }
             notifyObservers();
-            break;
+            return true;
         }
     }
+    return false; //item non trovato
 }
 
 void ShoppingList::removeItem(const std::string& itemName){

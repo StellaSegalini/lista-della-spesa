@@ -25,7 +25,7 @@ public:
 
     std::string getListName() const;
     void addItem(const Item &item);
-    void updateItem(const std::string &itemName,
+    bool updateItem(const std::string &itemName,
                     std::optional<int> newQuantity = std::nullopt,
                     std::optional<bool> status = std::nullopt);
     void removeItem(const std::string &itemName);
