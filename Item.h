@@ -10,7 +10,7 @@
 //Classe Item che rappresenta un oggetto nella lista
 class Item{
 public:
-    Item(std::string name, std::string category, int quantity);
+    Item(const std::string& name, const std::string& category, int quantity);
 
     std::string getName() const;
     std::string getCategory() const;

@@ -3,7 +3,7 @@
 //
 #include "Item.h"
 
-Item::Item(std::string name, std::string category, int quantity)
+Item::Item(const std::string& name,  const std::string& category, int quantity)
     : name(std::move(name)), category(std::move(category)), quantity(quantity) {}
 
     std::string Item::getName() const { return name; }
