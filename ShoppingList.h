@@ -7,11 +7,12 @@
 
 
 #include <vector>
-#include <algorithm>
+#include <memory>
+#include <string>
 #include "Subject.h"
 #include "Item.h"
 
-//Classe ShoppingList (Observable)
+//Classe ShoppingList
 class ShoppingList : public Subject {
 private:
     std::string listName;
@@ -19,48 +20,17 @@ private:
     std::vector<std::shared_ptr<Observer>> observers;
 
 public:
-    ShoppingList(const std::string &listName) : listName(listName) {}
+    explicit ShoppingList(const std::string &listName);
 
-    std::string getListName() const {return listName;}
+    std::string getListName() const;
+    void addItem(const Item &item);
+    void updateItemQuantity(const std::string &itemName, int newQuantity);
+    void removeItem(const std::string &itemName);
+    const std::vector<Item> &getItems() const;
 
-     void addItem(const Item &item){
-        items.push_back(item);
-        notifyObservers(); //notifica gli osservatori
-    }
-
-    void updateItemQuantity(const std::string &itemName, int newQuantity){
-        for(auto &item : items){
-            if (item.getName() == itemName) {
-                item.setQuantity(newQuantity);
-                notifyObservers();
-                break;
-            }
-        }
-    }
-    void removeItem(const std::string &itemName){
-        auto it = std::remove_if(items.begin(), items.end(),
-                                 [&](const Item &item) { return item.getName() == itemName;});
-        if(it != items.end()) {
-            items.erase(it, items.end());
-            notifyObservers();
-        }
-    }
-    const std::vector<Item>& getItems() const {
-        return items;
-    }
-
-    void addObserver(std::shared_ptr<Observer> observer) override {
-        observers.push_back(observer);
-    }
-
-    void removeObserver(std::shared_ptr<Observer> observer) override {
-        observers.erase(std::remove(observers.begin(), observers.end(), observer), observers.end());
-    }
-    void notifyObservers() override {
-        for (const auto& observer : observers){
-            observer->update(*this);
-        }
-    }
+    void addObserver(std::shared_ptr<Observer> observer) override;
+    void removeObserver(std::shared_ptr<Observer> observer) override;
+    void notifyObservers() override;
 };
 
 #endif //LISTA_SPESA_SHOPPINGLIST_H

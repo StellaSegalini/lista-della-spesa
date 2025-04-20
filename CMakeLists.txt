@@ -13,7 +13,7 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 #codice sorgente
-add_executable(lista_spesa Item.h ShoppingList.h User.h Subject.h Observer.h main.cpp)
+add_executable(lista_spesa Item.cpp ShoppingList.cpp User.cpp Subject.h Observer.h main.cpp)
 
 #test
 add_executable(lista_spesa_tests test/test_shopping_list.cpp test/UserTest.cpp test/ItemTest.cpp)

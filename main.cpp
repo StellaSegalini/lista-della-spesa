@@ -2,8 +2,6 @@
 #include "ShoppingList.h"
 #include <memory>
 #include <iostream>
-#include "Observer.h"
-#include "Subject.h"
 #include "Item.h"
 
 
