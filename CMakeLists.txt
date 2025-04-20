@@ -13,10 +13,10 @@ FetchContent_MakeAvailable(googletest)
 enable_testing()
 
 #codice sorgente
-add_executable(lista_spesa Item.cpp ShoppingList.cpp User.cpp Subject.h Observer.h main.cpp)
+add_executable(lista_spesa Item.cpp ShoppingList.cpp User.cpp main.cpp)
 
 #test
-add_executable(lista_spesa_tests test/test_shopping_list.cpp test/UserTest.cpp test/ItemTest.cpp)
+add_executable(lista_spesa_tests test/test_shopping_list.cpp test/UserTest.cpp test/ItemTest.cpp ShoppingList.cpp Item.cpp User.cpp)
 
 target_link_libraries(lista_spesa_tests gtest gtest_main pthread)
 target_include_directories(lista_spesa_tests PRIVATE ${PROJECT_SOURCE_DIR}/src

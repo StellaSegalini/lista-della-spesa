@@ -2,6 +2,8 @@
 // Created by stell on 20/04/2025.
 //
 #include "ShoppingList.h"
+#include "Subject.h"
+#include "Observer.h"
 #include <algorithm>
 #include <optional>
 

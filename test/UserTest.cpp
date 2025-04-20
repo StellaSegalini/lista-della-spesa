@@ -8,10 +8,10 @@
 // test dell'osservatore User per la notifica di aggiornamento
 TEST(User, ReceivesUpdate) {
 ShoppingList list("Lista della Spesa");
-auto user1 = std::make_shared<User>("Andrea");
+User user1 ("Andrea");
 
-list.addObserver(user1);
-list.addItem(Item("Succo di Frutta", "Bevande", 2));
+list.addObserver(&user1);
+list.addItem(Item("Latte", "Bevande", 1));
 
 // Verifica che l'utente abbia ricevuto la notifica
 testing::internal::CaptureStdout();
