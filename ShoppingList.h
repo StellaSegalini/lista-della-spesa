@@ -7,7 +7,7 @@
 
 
 #include <vector>
-#include <memory>
+#include <algorithm>
 #include <string>
 #include "Subject.h"
 #include "Item.h"
@@ -17,7 +17,7 @@ class ShoppingList : public Subject {
 private:
     std::string listName;
     std::vector<Item> items;
-    std::vector<std::shared_ptr<Observer>> observers;
+    std::vector<Observer*> observers;
 
 public:
     explicit ShoppingList(const std::string &listName);
@@ -28,8 +28,8 @@ public:
     void removeItem(const std::string &itemName);
     const std::vector<Item> &getItems() const;
 
-    void addObserver(std::shared_ptr<Observer> observer) override;
-    void removeObserver(std::shared_ptr<Observer> observer) override;
+    void addObserver(Observer* observer) override;
+    void removeObserver(Observer* observer) override;
     void notifyObservers() override;
 };
 

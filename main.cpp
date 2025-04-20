@@ -8,11 +8,11 @@
 //esempio di utilizzo
 int main(){
     ShoppingList list1 ("Lista Famiglia");
-    auto user1  = std::make_shared<User>("Andrea");
-    auto user2 = std::make_shared<User>("Marco");
+    User user1("Andrea");
+    User user2 ("Marco");
 
-    list1.addObserver(user1);
-    list1.addObserver(user2);
+    list1.addObserver(&user1);
+    list1.addObserver(&user2);
 
     list1.addItem(Item("Succo di Frutta","Bevande", 2));
     list1.addItem(Item("Biscotti","Alimenti", 1));
