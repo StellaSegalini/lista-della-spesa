@@ -22,5 +22,11 @@ int main(){
 
     std::cout<<"\nRimuoviamo 'Succo di Frutta' dalla Lista Famiglia:\n";
     list1.removeItem("Succo di Frutta");
+
+    try {
+        list1.addItem(Item("Latte","Bevande", -2));
+    } catch (const std::invalid_argument& e) {
+        std::cerr << "Errore: " << e.what() <<std::endl;
+    }
     return 0;
 }
