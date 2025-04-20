@@ -32,6 +32,7 @@ public:
     const std::vector<Item> &getItems() const;
     std::vector<Item> &getItems();
     int getBoughtItemCount() const;
+    int getUnBoughtItemCount() const;
     void addObserver(Observer* observer) override;
     void removeObserver(Observer* observer) override;
     void notifyObservers() override;

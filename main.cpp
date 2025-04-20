@@ -33,6 +33,7 @@ int main(){
     list1.updateItem("Biscotti", std::nullopt, true);
 
     std::cout << "Oggetti comprati: " << list1.getBoughtItemCount() << std::endl;
+    std::cout << "Oggetti ancora da comprare: " << list1.getUnBoughtItemCount() << std::endl;
 
     bool updated = list1.updateItem("Yogurt", 1, true);
     if(!updated) {

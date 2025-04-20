@@ -41,9 +41,19 @@ bool ShoppingList::updateItem(const std::string& itemName,
 }
 
 int ShoppingList::getBoughtItemCount() const {
-    int count=0;
+    int count = 0;
     for (const auto& item : items) {
         if(item.getIsBought()) {
+            count++;
+        }
+    }
+    return count;
+}
+
+int ShoppingList::getUnBoughtItemCount() const {
+    int count = 0;
+    for (const auto& item : items) {
+        if(!item.getIsBought()) {
             count++;
         }
     }
