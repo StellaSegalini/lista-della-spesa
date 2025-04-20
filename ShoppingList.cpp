@@ -39,6 +39,13 @@ void ShoppingList::removeItem(const std::string& itemName){
         notifyObservers();
     }
 }
+
+//versione non-const per modifica
+std::vector<Item>& ShoppingList::getItems() {
+    return items;
+}
+
+//versione const per lettura
 const std::vector<Item>& ShoppingList::getItems() const {
     return items;
 }

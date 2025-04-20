@@ -27,6 +27,7 @@ public:
     void updateItemQuantity(const std::string &itemName, int newQuantity);
     void removeItem(const std::string &itemName);
     const std::vector<Item> &getItems() const;
+    std::vector<Item> &getItems();
 
     void addObserver(Observer* observer) override;
     void removeObserver(Observer* observer) override;
