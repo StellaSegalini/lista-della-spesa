@@ -32,6 +32,8 @@ int main(){
     std::cout<<"\nAggiornamento dopo l'aggiunta di oggetti:\n";
     list1.updateItem("Biscotti", std::nullopt, true);
 
+    std::cout << "Oggetti comprati: " << list1.getBoughtItemCount() << std::endl;
+
     bool updated = list1.updateItem("Yogurt", 1, true);
     if(!updated) {
         std::cout << "'Yogurt' non e' presente nella lista. Nessun aggiornamento effettuato.\n";

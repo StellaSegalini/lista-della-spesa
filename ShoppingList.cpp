@@ -40,6 +40,16 @@ bool ShoppingList::updateItem(const std::string& itemName,
     return false; //item non trovato
 }
 
+int ShoppingList::getBoughtItemCount() const {
+    int count=0;
+    for (const auto& item : items) {
+        if(item.getIsBought()) {
+            count++;
+        }
+    }
+    return count;
+}
+
 void ShoppingList::removeItem(const std::string& itemName){
     auto it = std::remove_if(items.begin(), items.end(),
                              [&](const Item& item) { return item.getName() == itemName;});
