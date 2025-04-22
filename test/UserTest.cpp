@@ -6,19 +6,31 @@
 #include "../ShoppingList.h"
 
 // test dell'osservatore User per la notifica di aggiornamento
-TEST(User, ReceivesUpdate) {
-ShoppingList list("Lista della Spesa");
-User user1 ("Andrea");
+TEST(UserTest, ReceivesUpdate) {
+    ShoppingList list("Lista della Spesa");
+    User user1 ("Andrea");
 
-list.addObserver(&user1);
-list.addItem(Item("Latte", "Bevande", 1));
+    user1.subscribe(list);
 
-// Verifica che l'utente abbia ricevuto la notifica
-testing::internal::CaptureStdout();
-list.addItem(Item("Succo di Frutta", "Bevande",2));
-std::string output = testing::internal::GetCapturedStdout();
-ASSERT_NE(output.find("Utente Andrea ha ricevuto un aggiornamento"), std::string::npos);
-ASSERT_NE(output.find("Succo di Frutta"), std::string::npos);
+    // add item
+    testing::internal::CaptureStdout();
+    list.addItem(Item("Latte", "Bevande", 1));
+    std::string outputAdd = testing::internal::GetCapturedStdout();
+    ASSERT_NE(outputAdd.find("Utente Andrea ha ricevuto un aggiornamento"), std::string::npos);
+    ASSERT_NE(outputAdd.find("Latte"), std::string::npos);
+
+    //update item
+    testing::internal::CaptureStdout();
+    list.updateItem("Latte", 2, true);
+    std::string outputUpdate = testing::internal::GetCapturedStdout();
+    ASSERT_NE(outputUpdate.find("Utente Andrea ha ricevuto un aggiornamento"), std::string::npos);
+    ASSERT_NE(outputUpdate.find("Latte"), std::string::npos);
+
+    //remove item
+    testing::internal::CaptureStdout();
+    list.removeItem("Latte");
+    std::string outputRemove = testing::internal::GetCapturedStdout();
+    ASSERT_NE(outputRemove.find("Utente Andrea ha ricevuto un aggiornamento"), std::string::npos);
 }
 
 TEST(UserTest, SubscribeAddsUserAsObserver) {
@@ -29,10 +41,22 @@ TEST(UserTest, SubscribeAddsUserAsObserver) {
     //Aggiungo un item per verificare se l'utente riceva la notifica
     testing::internal::CaptureStdout();
     list1.addItem(Item("Pasta", "Alimenti", 1));
-    std::string output = testing::internal::GetCapturedStdout();
+    std::string outputAdd = testing::internal::GetCapturedStdout();
+    ASSERT_NE(outputAdd.find("Utente Marco ha ricevuto un aggiornamento"), std::string::npos);
+    ASSERT_NE(outputAdd.find("Pasta"), std::string::npos);
 
-    ASSERT_NE(output.find("Utente Marco ha ricevuto un aggiornamento"), std::string::npos);
-    ASSERT_NE(output.find("Pasta"), std::string::npos);
+    //update item
+    testing::internal::CaptureStdout();
+    list1.updateItem("Pasta", 3, true);
+    std::string outputUpdate = testing::internal::GetCapturedStdout();
+    ASSERT_NE(outputUpdate.find("Utente Marco ha ricevuto un aggiornamento"), std::string::npos);
+    ASSERT_NE(outputUpdate.find("Pasta"), std::string::npos);
+
+    //remove item
+    testing::internal::CaptureStdout();
+    list1.removeItem("Pasta");
+    std::string outputRemove = testing::internal::GetCapturedStdout();
+    ASSERT_NE(outputRemove.find("Utente Marco ha ricevuto un aggiornamento"), std::string::npos);
 }
 
 TEST(UserTest, UnsbscribeStopsnotifications) {
@@ -44,8 +68,19 @@ TEST(UserTest, UnsbscribeStopsnotifications) {
 
     //Aggiungo un item, non dovrebbe arrivare alcuna notifica
     testing::internal::CaptureStdout();
-    list1.addItem(Item("Latte", "bevande", 1));
-    std::string output = testing::internal::GetCapturedStdout();
+    list1.addItem(Item("Latte", "Bevande", 1));
+    std::string outputAdd = testing::internal::GetCapturedStdout();
+    ASSERT_TRUE(outputAdd.empty());
 
-    ASSERT_TRUE(output.empty());
+    //update item
+    testing::internal::CaptureStdout();
+    list1.updateItem("Latte", 2, true);
+    std::string outputUpdate = testing::internal::GetCapturedStdout();
+    ASSERT_TRUE(outputUpdate.empty());
+
+    //remove item
+    testing::internal::CaptureStdout();
+    list1.removeItem("Latte");
+    std::string outputRemove = testing::internal::GetCapturedStdout();
+    ASSERT_TRUE(outputRemove.empty());
 }
