@@ -61,28 +61,6 @@ TEST(ShoppingListTest, UpdateItemNotifiesObservers) {
     ASSERT_EQ(user1->getNotifications()[1], "Update for: Lista della Spesa");
 }
 
-TEST(ShoppingListTest, GetBoughtItemCount) {
-    ShoppingList list("Lista della Spesa");
-    list.addItem(Item("Succo di Frutta","Bevande", 2, true));
-    list.addItem(Item("Biscotti", "Alimenti", 1, false));
-    list.addItem(Item("Latte","Bevande", 1, true));
-
-
-// Verifica che la funzione ritorni il numero corretto di articoli comprati
-    ASSERT_EQ(list.getBoughtItemCount(), 2);
-}
-
-TEST(ShoppingListTest, GetUnBoughtItemCount) {
-    ShoppingList list("Lista della Spesa");
-    list.addItem(Item("Succo di Frutta","Bevande", 2, true));
-    list.addItem(Item("Biscotti", "Alimenti", 1, false));
-    list.addItem(Item("Latte","Bevande", 1, true));
-
-
-// Verifica che la funzione ritorni il numero corretto di articoli non comprati
-    ASSERT_EQ(list.getUnBoughtItemCount(), 1);
-}
-
 TEST(ShoppingListTest, RemoveNonExistingItem) {
     ShoppingList list("Lista della Spesa");
     list.addItem(Item("Latte", "Bevande", 1));
@@ -102,3 +80,30 @@ TEST(ShoppingListTest, UpdateNonExistingItem) {
     ASSERT_FALSE(result);
 }
 
+TEST(ShoppingListTest, ItemCountCheck) {
+    ShoppingList list("Lista della Spesa");
+    list.addItem(Item("Latte", "Bevande", 1)); // non comprato
+    list.addItem(Item("Pane", "Alimenti", 1, true)); //comprato
+    list.addItem(Item("Biscotti", "Dolci", 2, true)); //comprato
+
+    //Controlli iniziali
+    ASSERT_EQ(list.getItems().size(), 3);
+    ASSERT_EQ(list.getBoughtItemCount(), 2);
+    ASSERT_EQ(list.getUnBoughtItemCount(), 1);
+
+    //Rimuovo un item
+    list.removeItem("Latte");
+
+    //Controlli dopo rimozione
+    ASSERT_EQ(list.getItems().size(), 2);
+    ASSERT_EQ(list.getBoughtItemCount(), 2);
+    ASSERT_EQ(list.getUnBoughtItemCount(), 0);
+
+    //Aggiorno un item
+    list.updateItem("Biscotti", std::nullopt, false);
+
+    //Controllo dopo aggiornamento
+    ASSERT_EQ(list.getItems().size(), 2);
+    ASSERT_EQ(list.getBoughtItemCount(), 1);
+    ASSERT_EQ(list.getUnBoughtItemCount(), 1);
+}
