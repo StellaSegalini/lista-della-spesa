@@ -25,14 +25,14 @@ private:
 };
 
 TEST(ShoppingListTest, AddItemNotifiesObservers) {
-ShoppingList list("Lista della Spesa");
-auto user1 = std::make_shared<MockUser>("Andrea");
-list.addObserver(user1.get());
-list.addItem(Item("Succo di Frutta", "Bevande", 2));
+    ShoppingList list("Lista della Spesa");
+    auto user1 = std::make_shared<MockUser>("Andrea");
+    list.addObserver(user1.get());
+    list.addItem(Item("Succo di Frutta", "Bevande", 2));
 
-// Verifica che l'osservatore abbia ricevuto la notifica
-ASSERT_EQ(user1->getNotifications().size(), 1);
-ASSERT_EQ(user1->getNotifications()[0], "Update for: Lista della Spesa");
+    // Verifica che l'osservatore abbia ricevuto la notifica
+    ASSERT_EQ(user1->getNotifications().size(), 1);
+    ASSERT_EQ(user1->getNotifications()[0], "Update for: Lista della Spesa");
 }
 
 TEST(ShoppingListTest, RemoveItemNotifiesObservers) {
@@ -43,7 +43,7 @@ TEST(ShoppingListTest, RemoveItemNotifiesObservers) {
     list.addItem(item);
     list.removeItem("Succo di Frutta");
 
-// Verifica che l'osservatore abbia ricevuto la notifica
+    // Verifica che l'osservatore abbia ricevuto la notifica
     ASSERT_EQ(user1->getNotifications().size(), 2);
     ASSERT_EQ(user1->getNotifications()[1], "Update for: Lista della Spesa");
 }
@@ -56,7 +56,7 @@ TEST(ShoppingListTest, UpdateItemNotifiesObservers) {
     list.addItem(item);
     list.updateItem("Succo di Frutta",3, true);
 
-// Verifica che l'osservatore abbia ricevuto la notifica
+    // Verifica che l'osservatore abbia ricevuto la notifica
     ASSERT_EQ(user1->getNotifications().size(), 2);
     ASSERT_EQ(user1->getNotifications()[1], "Update for: Lista della Spesa");
 }
@@ -83,5 +83,22 @@ TEST(ShoppingListTest, GetUnBoughtItemCount) {
     ASSERT_EQ(list.getUnBoughtItemCount(), 1);
 }
 
+TEST(ShoppingListTest, RemoveNonExistingItem) {
+    ShoppingList list("Lista della Spesa");
+    list.addItem(Item("Latte", "Bevande", 1));
+    list.removeItem("Pane"); //Oggetto non presente
 
+    //Deve esserci ancora solo 1 elemento
+    ASSERT_EQ(list.getItems().size(), 1);
+    ASSERT_EQ(list.getItems()[0].getName(), "Latte");
+}
+
+TEST(ShoppingListTest, UpdateNonExistingItem) {
+    ShoppingList list("Lista della Spesa");
+    list.addItem(Item("Latte", "Bevande", 1));
+
+    //Tentativo aggiornamento su item inesistente
+    bool result = list.updateItem("Pane", 2, true);
+    ASSERT_FALSE(result);
+}
 

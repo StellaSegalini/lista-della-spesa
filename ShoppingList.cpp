@@ -5,6 +5,7 @@
 #include "Subject.h"
 #include "Observer.h"
 #include <algorithm>
+#include <iostream>
 #include <optional>
 
 ShoppingList::ShoppingList(const std::string& listName) : listName(listName) {}
@@ -39,6 +40,8 @@ bool ShoppingList::updateItem(const std::string& itemName,
             return true;
         }
     }
+
+    std::cout << "Impossibile aggiornare: item \"" << itemName << "\" non trovato nella lista \"" << listName << "\".\n";
     return false; //item non trovato
 }
 
@@ -68,6 +71,8 @@ void ShoppingList::removeItem(const std::string& itemName){
     if(it != items.end()) {
         items.erase(it, items.end());
         notifyObservers();
+    } else {
+        std::cout << "Item \"" << itemName << "\" non trovato nella lista \"" << listName << "\".\n";
     }
 }
 
