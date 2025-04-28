@@ -26,6 +26,17 @@ TEST(ItemTest, SetQuantity) {
     ASSERT_EQ(item.getQuantity(), 3);
 }
 
+//Test per costruzione con quantità negativa
+TEST(ItemTest, ConstructorThrowsOnNegativeQuantity){
+    ASSERT_THROW(Item("Latte", "Bevande",-1), std::invalid_argument);
+}
+
+//Test per setQuantity con quantità negativa
+TEST(ItemTest, SetQuantityThrowsOnNegativeQuantity){
+    Item item("Latte", "Bevande", 2);
+    ASSERT_THROW(item.setQuantity(-5), std::invalid_argument);
+}
+
 TEST(ItemTest, SetIsBoughtTrue) {
     Item item("Succo di Frutta", "Bevande", 2);
     item.setIsBought(true);
